@@ -24,11 +24,11 @@ export class StarWarsService {
 
   fetchCharacters() {
     this.httpClient.get('https://swapi.co/api/people/')
-      .map((response: Response) => {
+      .map((response: any) => {
         const data = response;
         const extractedChars = data.results;
         const chars = extractedChars.map((char) => {
-            return {name: char.name, side: ''};
+            return {name: char.name, height: char.height, side: ''};
         });
         return chars;
       })
@@ -59,14 +59,14 @@ export class StarWarsService {
     this.logService.writeLog('Changed side of ' + charInfo.name + ', new side: ' + charInfo.side);
   }
 
-  addCharacter(name, side) {
+  addCharacter(name, height, side) {
     const pos = this.characters.findIndex((char) => {
       return char.name === name;
     })
     if(pos !== -1) {
       return;
     }
-    const newChar = {name: name, side: side};
+    const newChar = {name: name, height: height, side: side};
     this.characters.push(newChar);
   }
 }
